@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct OVK_MeApp: App {
+    @State var isLogged = UserDefaults.standard.string(forKey: "access_token") != nil
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if (isLogged) {
+                ContentView()
+            } else {
+                AuthorizationView(isLogged: $isLogged)
+            }
         }
     }
 }
