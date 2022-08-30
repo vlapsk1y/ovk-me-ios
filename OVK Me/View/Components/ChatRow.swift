@@ -21,6 +21,12 @@ struct ChatRow: View {
                 }
                 Text(chat.lastMessage.text).font(.footnote).foregroundColor(.gray).lineLimit(1)
             }
+            // Don't work because in methods API always return read_State like 1
+            if (chat.lastMessage.readState == 0) {
+                Circle()
+                    .frame(width: 10, height: 10, alignment: .trailing)
+                    .foregroundColor(.blue)
+            }
         }
     }
 }

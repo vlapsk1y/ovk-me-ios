@@ -43,6 +43,11 @@ struct FriendsView: View {
                 }
             }
         }
+        .refreshable {
+            viewModel.isLoading.toggle()
+            viewModel.friends.removeAll()
+            viewModel.getFriends(userId: prefs.userId!)
+        }
         .onAppear {
             if (viewModel.friends.isEmpty) {
                 viewModel.getFriends(userId: prefs.userId!)

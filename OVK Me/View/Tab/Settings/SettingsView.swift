@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject private var viewModel = UsersModelData()
     @State private var prefs = Prefs()
+    @Binding var isLogged: Bool
     
     var body: some View {
         NavigationView {
@@ -43,6 +44,7 @@ struct SettingsView: View {
                 Section {
                     Button("Log out") {
                         UserDefaults.standard.removeObject(forKey: "access_token")
+                        isLogged.toggle()
                     }.foregroundColor(Color.red)
                 }
                 
@@ -59,6 +61,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(isLogged: .constant(true))
     }
 }

@@ -16,15 +16,24 @@ struct ChatView: View {
     
     var body: some View {
         VStack {
-            ScrollView {
-                ForEach(viewModel.messages, id: \.id) { message in
-                    BubbleMessage(direction: (message.out == 1) ? .right : .left) {
-                        Text(message.text)
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 10)
-                            .foregroundColor(Color.white)
-                            .background(Color.blue)
+            ScrollViewReader { scrollView in
+                ScrollView {
+                    ForEach(viewModel.messages, id: \.id) { message in
+                        BubbleMessage(direction: (message.out == 1) ? .right : .left) {
+                            Text(message.text)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 10)
+                                .foregroundColor(Color.white)
+                                .background(Color.blue)
+                        }
                     }
+                }
+            }
+            HStack {
+                TextField("Type text..", text: $message)
+                    .textFieldStyle(.roundedBorder)
+                Button("send") {
+                    viewModel.send(userId: peer.id, peerId: peer.id, message: message + " (send from OVK Me for iOS)")
                 }
             }
         }
@@ -38,13 +47,6 @@ struct ChatView: View {
                     Spacer()
                     AvatarUI()
                         .padding()
-                }
-            }
-            
-            ToolbarItem(placement: .bottomBar) {
-                HStack {
-                    TextField("Type text..", text: $message)
-                        .textFieldStyle(.roundedBorder)
                 }
             }
         }

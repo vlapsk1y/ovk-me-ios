@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var selection = tab.messenger
     @StateObject private var accountModel = AccountModelData()
+    @Binding var isLogged: Bool
     
     enum tab {
         case friends
@@ -27,7 +28,7 @@ struct ContentView: View {
                 Text("Messages")
                 Image(systemName: "message")
             }.tag(tab.messenger).backport.badge(self.accountModel.counters.messages)
-            SettingsView().tabItem {
+            SettingsView(isLogged: $isLogged).tabItem {
                 Text("Settings")
                 Image(systemName: "gear")
             }.tag(tab.settings)
@@ -40,7 +41,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(isLogged: .constant(true))
     }
 }
 
